@@ -56,6 +56,7 @@ export class SearchFieldInputDirective {
     const element: HTMLInputElement | undefined = this.elementRef.nativeElement;
     if (element) {
       element.value = '';
+      element.focus(); // adding focus to the search field after clearing its value
     }
   }
 }
