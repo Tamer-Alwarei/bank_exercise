@@ -11,13 +11,14 @@ import { SapphireSearchFieldModule } from './search-field/search-field.module';
   template: `<div
   style="display: flex; align-items: center; gap: 1rem;"
 >
+<!-- Changing "value" to "$event" -->
   <sp-search-field>
     <input  
       spSearchFieldInput
       [(ngModel)]="value"
       aria-label="Search"
       placeholder="Search"
-      (spSearchFieldSubmitted)="alert('Searched: ' + value)"
+      (spSearchFieldSubmitted)="alert('Searched: ' + $event)"
     />
   </sp-search-field>
 </div>
