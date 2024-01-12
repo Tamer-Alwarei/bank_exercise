@@ -33,6 +33,31 @@ describe("SearchField", () => {
     cy.get("input").type("search query");
     cy.findByRole("button").click();
     cy.get("input").should("have.value", "");
+    cy.get('input').should('have.focus') // focus on search input after clearing the value
+  });
+
+  // Adding this section to test the alert value after clearing the search input.
+  // Alert should get an empty value after clicing the clear button.
+  it("clear input by click button then submit the serch and get alert value", () => {
+    const onSubmit = cy.stub();
+    cy.mount(
+      `<sp-search-field>
+          <input
+            spSearchFieldInput
+            (spSearchFieldSubmitted)="onSubmit($event)"
+            aria-label="Search"
+            placeholder="Search"
+          />
+        </sp-search-field>`,
+      { componentProperties: { onSubmit  } }
+    );
+    cy.get("input").type("s");
+    cy.findByRole("button").click();
+    cy.on ('window:alert', onSubmit);
+    cy.realPress("Enter")
+    .then(() => {
+      expect(onSubmit).to.be.calledWith('');  
+    }) 
   });
 
   it("sets the expected aria-label on the clear button", () => {
